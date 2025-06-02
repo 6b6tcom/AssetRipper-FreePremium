@@ -1,6 +1,7 @@
 using AsmResolver.DotNet;
 using AssetRipper.Import.Configuration;
 using AssetRipper.Import.Logging;
+using AssetRipper.Import.Structure.Assembly;
 using AssetRipper.Import.Structure.Platforms;
 using Cpp2IL.Core.Api;
 using Cpp2IL.Core.InstructionSets;
@@ -114,7 +115,11 @@ namespace AssetRipper.Import.Structure.Assembly.Managers
 				? RecoveryOutputFormat ?? DefaultOutputFormat
 				: DefaultOutputFormat;
 
-			List<AssemblyDefinition> assemblies = outputFormat.BuildAssemblies(GetCurrentAppContext());
+                        List<AssemblyDefinition> assemblies = outputFormat.BuildAssemblies(GetCurrentAppContext());
+                        if (contentLevel == ScriptContentLevel.Level4)
+                        {
+                                AIAssembler.AssembleScripts(assemblies);
+                        }
 
 			foreach (AssemblyDefinition assembly in assemblies)
 			{

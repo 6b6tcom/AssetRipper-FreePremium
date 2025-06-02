@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	var selects = document.querySelectorAll('select');
 
 	// Iterate through each select element
-	selects.forEach(function (select) {
-		// Add event listener to the select element to update the descriptions
+        selects.forEach(function (select) {
+                // Add event listener to the select element to update the descriptions
 		select.addEventListener('change', function () {
 			for (let i = 0; i < select.options.length; i++) {
 				var option = select.options[i];
@@ -26,7 +26,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		// Trigger initial update to display the description for the default selected option
 		select.dispatchEvent(new Event('change'));
-	});
+        });
+
+        var bgSelector = document.getElementById('background-color-selector');
+        if (bgSelector) {
+                bgSelector.addEventListener('change', function () {
+                        document.body.classList.remove('bg-default', 'bg-red', 'bg-green', 'bg-blue');
+                        document.body.classList.add(bgSelector.value);
+                });
+        }
 });
 
 // For loading dynamic content into pre elements

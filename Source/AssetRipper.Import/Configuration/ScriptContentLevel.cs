@@ -19,8 +19,8 @@
 		/// </summary>
 		Level3,
 		/// <summary>
-		/// IL2Cpp methods are recovered without regard to safety. Currently the same as <see cref="Level2"/>
-		/// </summary>
-		//Level4,
-	}
+                /// IL2Cpp methods are recovered without regard to safety. Currently uses AI assistance.
+                /// </summary>
+                Level4,
+        }
 }

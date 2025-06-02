@@ -19,7 +19,10 @@ public abstract class DefaultPage : HtmlPage
 				OnlineDependencies.Bootstrap.WriteStyleSheetReference(writer);
 				new Link(writer).WithRel("stylesheet").WithHref("/css/site.css").Close();
 			}
-			using (new Body(writer).WithCustomAttribute("data-bs-theme", "dark").End())
+                        using (new Body(writer)
+                                .WithCustomAttribute("data-bs-theme", "dark")
+                                .WithClass(GameFileLoader.Settings.ExportSettings.BackgroundColor)
+                                .End())
 			{
 				WriteHeader(writer);
 

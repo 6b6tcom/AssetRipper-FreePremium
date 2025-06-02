@@ -74,12 +74,16 @@ public sealed partial class SettingsPage : DefaultPage
 								{
 									WriteDropDownForBundledAssetsExportMode(writer);
 								}
-								using (new Div(writer).WithClass("col").End())
-								{
-									WriteDropDownForScriptContentLevel(writer);
-								}
-							}
-						}
+                                                        using (new Div(writer).WithClass("col").End())
+                                                        {
+                                                                WriteDropDownForScriptContentLevel(writer);
+                                                        }
+                                                        using (new Div(writer).WithClass("col").End())
+                                                        {
+                                                                WriteBackgroundColorSelector(writer);
+                                                        }
+                                                    }
+                                            }
 
 						new Hr(writer).Close();
 
@@ -232,8 +236,8 @@ public sealed partial class SettingsPage : DefaultPage
 		}
 	}
 
-	private static void WriteDropDown<T>(TextWriter writer, DropDownSetting<T> setting, T value, string id) where T : struct, Enum
-	{
+        private static void WriteDropDown<T>(TextWriter writer, DropDownSetting<T> setting, T value, string id) where T : struct, Enum
+        {
 		IReadOnlyList<DropDownItem<T>> items = setting.GetValues();
 		new Label(writer).WithClass("form-label").WithFor(id).Close(setting.Title);
 		using (new Select(writer).WithClass("form-select").WithName(id).End())
@@ -258,11 +262,29 @@ public sealed partial class SettingsPage : DefaultPage
 				.Close(item.Description);
 		}
 
-		static string CreateUniqueID(string selectID, int index)
-		{
-			return $"{selectID}_description_{index}";
-		}
-	}
+                static string CreateUniqueID(string selectID, int index)
+                {
+                        return $"{selectID}_description_{index}";
+                }
+        }
+
+        private static void WriteBackgroundColorSelector(TextWriter writer)
+        {
+                const string id = nameof(ExportSettings.BackgroundColor);
+                new Label(writer).WithClass("form-label").WithFor(id).Close("Background Color");
+                using (new Select(writer).WithClass("form-select").WithId("background-color-selector").WithName(id).End())
+                {
+                        string value = Configuration.ExportSettings.BackgroundColor;
+                        string[] options = ["bg-default", "bg-red", "bg-green", "bg-blue"];
+                        foreach (string option in options)
+                        {
+                                new Option(writer)
+                                        .WithValue(option)
+                                        .MaybeWithSelected(option == value)
+                                        .Close(option);
+                        }
+                }
+        }
 
 	private static UnityVersion TryParseUnityVersion(string? version)
 	{
@@ -296,10 +318,15 @@ public sealed partial class SettingsPage : DefaultPage
 		{
 			action.Invoke(form.ContainsKey(key));
 		}
-		foreach ((string key, string? value) in form.Select(pair => (pair.Key, (string?)pair.Value)))
-		{
-			SetProperty(key, value);
-		}
+                foreach ((string key, string? value) in form.Select(pair => (pair.Key, (string?)pair.Value)))
+                {
+                        SetProperty(key, value);
+                }
+
+                if (form.TryGetValue(nameof(ExportSettings.BackgroundColor), out var bg))
+                {
+                        Configuration.ExportSettings.BackgroundColor = bg!;
+                }
 
 		if (Configuration.SaveSettingsToDisk)
 		{

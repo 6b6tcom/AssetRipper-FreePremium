@@ -52,7 +52,9 @@ public sealed record class ExportSettings
 
 	public bool SaveSettingsToDisk { get; set; }
 
-	public string? LanguageCode { get; set; }
+        public string? LanguageCode { get; set; }
+
+        public string BackgroundColor { get; set; } = "bg-default";
 
 	public void Log()
 	{
@@ -62,7 +64,8 @@ public sealed record class ExportSettings
 		Logger.Info(LogCategory.General, $"{nameof(ScriptExportMode)}: {ScriptExportMode}");
 		Logger.Info(LogCategory.General, $"{nameof(ScriptLanguageVersion)}: {ScriptLanguageVersion}");
 		Logger.Info(LogCategory.General, $"{nameof(ShaderExportMode)}: {ShaderExportMode}");
-		Logger.Info(LogCategory.General, $"{nameof(SpriteExportMode)}: {SpriteExportMode}");
-		Logger.Info(LogCategory.General, $"{nameof(TextExportMode)}: {TextExportMode}");
-	}
+                Logger.Info(LogCategory.General, $"{nameof(SpriteExportMode)}: {SpriteExportMode}");
+                Logger.Info(LogCategory.General, $"{nameof(TextExportMode)}: {TextExportMode}");
+                Logger.Info(LogCategory.General, $"{nameof(BackgroundColor)}: {BackgroundColor}");
+        }
 }
