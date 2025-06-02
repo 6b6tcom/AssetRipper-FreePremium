@@ -18,14 +18,14 @@ html {
 }
 
 body {
-        margin: 0;
-        padding: 0;
-        min-height: 100vh; /* Ensure the body takes up at least the full height of the viewport */
-        display: flex;
-        flex-direction: column;
-        background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-        color: #ffffff;
-        overflow: hidden;
+       margin: 0;
+       padding: 0;
+       min-height: 100vh; /* Ensure the body takes up at least the full height of the viewport */
+       display: flex;
+       flex-direction: column;
+       background: var(--background-color, radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%));
+       color: #ffffff;
+       overflow-y: auto;
 }
 
 body::before {
@@ -59,5 +59,21 @@ footer {
 
 /* This lets the dropdown descriptions in the settings menu render correctly. */
 .dropdown-description.disabled {
-	display: none; /* Hide disabled elements */
+        display: none; /* Hide disabled elements */
+}
+
+.bg-default {
+       --background-color: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+}
+
+.bg-red {
+       --background-color: #8b0000;
+}
+
+.bg-green {
+       --background-color: #004d00;
+}
+
+.bg-blue {
+       --background-color: #001a66;
 }
