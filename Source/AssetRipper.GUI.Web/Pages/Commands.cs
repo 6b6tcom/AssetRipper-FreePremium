@@ -143,7 +143,7 @@ public static class Commands
 		if (append)
 		{
 			string timestamp = DateTime.UtcNow.ToString("yyyyMMdd_HHmmss");
-			string subfolder = $"AssetRipper_export_{timestamp}";
+                        string subfolder = $"XeraRipper_export_{timestamp}";
 			return Path.Combine(path, subfolder);
 		}
 

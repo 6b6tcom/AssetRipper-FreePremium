@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+      - name: Get version
+        id: vars
+        run: |
+          VERSION=$(grep -Po '(?<=<Version>)[^<]+' Source/Directory.Build.props)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Publish
+        run: dotnet publish -c Release -r linux-x64 -o publish
+        working-directory: Source/AssetRipper.GUI.Free
+      - name: Zip
+        run: |
+          cd publish
+          zip -r ../XeraRipperPremium-${{ steps.vars.outputs.version }}.zip .
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: XeraRipperPremium-${{ steps.vars.outputs.version }}.zip
+          tag: ${{ github.ref_name }}
+          name: XeraRipperPremium-${{ steps.vars.outputs.version }}
+          generateReleaseNotes: true
