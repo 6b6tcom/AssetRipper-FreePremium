@@ -102,18 +102,20 @@ public class ExportHandler
 		Settings.ExportRootPath = outputPath;
 		Settings.SetProjectSettings(gameData.ProjectVersion);
 
-		ProjectExporter projectExporter = new(Settings, gameData.AssemblyManager);
-		BeforeExport(projectExporter);
-		projectExporter.DoFinalOverrides(Settings);
-		projectExporter.Export(gameData.GameBundle, Settings, fileSystem);
+                ProjectExporter projectExporter = new(Settings, gameData.AssemblyManager);
+                BeforeExport(projectExporter);
+                projectExporter.DoFinalOverrides(Settings);
+                projectExporter.Export(gameData.GameBundle, Settings, fileSystem);
 
 		Logger.Info(LogCategory.Export, "Finished exporting assets");
 
-		foreach (IPostExporter postExporter in GetPostExporters())
-		{
-			postExporter.DoPostExport(gameData, Settings, fileSystem);
-		}
-		Logger.Info(LogCategory.Export, "Finished post-export");
+                foreach (IPostExporter postExporter in GetPostExporters())
+                {
+                        postExporter.DoPostExport(gameData, Settings, fileSystem);
+                }
+                Logger.Info(LogCategory.Export, "Finished post-export");
+
+                fileSystem.File.Create(fileSystem.Path.Join(outputPath, "Xera.txt")).Dispose();
 
 		static string GetListOfVersions(GameBundle gameBundle)
 		{

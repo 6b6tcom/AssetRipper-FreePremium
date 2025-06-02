@@ -66,7 +66,11 @@ public static class AIAssembler
             temperature = 0
         };
 
-        string json = System.Text.Json.JsonSerializer.Serialize(request);
+        System.Text.Json.JsonSerializerOptions options = new()
+        {
+            TypeInfoResolver = System.Text.Json.Serialization.Metadata.DefaultJsonTypeInfoResolver.Instance
+        };
+        string json = System.Text.Json.JsonSerializer.Serialize(request, options);
         using StringContent content = new(json, System.Text.Encoding.UTF8, "application/json");
         HttpResponseMessage response = client.PostAsync("https://api.openai.com/v1/chat/completions", content).GetAwaiter().GetResult();
         if (!response.IsSuccessStatusCode)
@@ -92,7 +96,11 @@ public static class AIAssembler
             messages = new[] { new { role = "user", content = prompt } }
         };
 
-        string json = System.Text.Json.JsonSerializer.Serialize(request);
+        System.Text.Json.JsonSerializerOptions options = new()
+        {
+            TypeInfoResolver = System.Text.Json.Serialization.Metadata.DefaultJsonTypeInfoResolver.Instance
+        };
+        string json = System.Text.Json.JsonSerializer.Serialize(request, options);
         using StringContent content = new(json, System.Text.Encoding.UTF8, "application/json");
         HttpResponseMessage response = client.PostAsync("https://api.anthropic.com/v1/messages", content).GetAwaiter().GetResult();
         if (!response.IsSuccessStatusCode)
