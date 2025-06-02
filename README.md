@@ -1,6 +1,7 @@
 # Xera Ripper
 
 Xera Ripper is a custom build of AssetRipper used by our team for professional game reverse engineering.
+AI DECOMP WIP 
 
 ## Features
 - Extract and export assets from Unity games
