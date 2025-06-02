@@ -11,7 +11,7 @@ public static class AIAssembler
                      Environment.GetEnvironmentVariable("CLAUDE_API_KEY");
         if (string.IsNullOrEmpty(key))
         {
-            Logger.Warn(LogCategory.Import, "No AI API key provided. Skipping level 4 assembly.");
+            Logger.Warning(LogCategory.Import, "No AI API key provided. Skipping level 4 assembly.");
             return;
         }
 
