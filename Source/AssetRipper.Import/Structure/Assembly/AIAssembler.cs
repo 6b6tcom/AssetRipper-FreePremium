@@ -1,10 +1,12 @@
 using AssetRipper.Import.Logging;
 using AsmResolver.DotNet;
 using AsmResolver.DotNet.Code.Cil;
+using AsmResolver.PE.DotNet.Cil;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Linq;
 
 namespace AssetRipper.Import.Structure.Assembly;
 
@@ -24,7 +26,7 @@ public static class AIAssembler
 
         foreach (AssemblyDefinition assembly in assemblies)
         {
-            foreach (TypeDefinition type in assembly.GetAllTypes())
+            foreach (TypeDefinition type in assembly.Modules.SelectMany(m => m.GetAllTypes()))
             {
                 foreach (MethodDefinition method in type.Methods)
                 {
