@@ -40,12 +40,14 @@ public static class GameFileLoader
 		}
 	}
 
-	public static void LoadAndProcess(IReadOnlyList<string> paths)
-	{
-		Reset();
-		Settings.LogConfigurationValues();
-		GameData = ExportHandler.LoadAndProcess(paths);
-	}
+        public static void LoadAndProcess(IReadOnlyList<string> paths)
+        {
+                Reset();
+                Settings.LogConfigurationValues();
+                Environment.SetEnvironmentVariable("OPENAI_API_KEY", Settings.ImportSettings.OpenAIApiKey);
+                Environment.SetEnvironmentVariable("CLAUDE_API_KEY", Settings.ImportSettings.AnthropicApiKey);
+                GameData = ExportHandler.LoadAndProcess(paths);
+        }
 
 	public static void ExportUnityProject(string path)
 	{

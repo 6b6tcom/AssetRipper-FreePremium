@@ -37,14 +37,28 @@ public sealed record class ImportSettings
 	/// <summary>
 	/// The target version to convert all assets to. Experimental
 	/// </summary>
-	[JsonConverter(typeof(UnityVersionJsonConverter))]
-	public UnityVersion TargetVersion { get; set; }
+        [JsonConverter(typeof(UnityVersionJsonConverter))]
+        public UnityVersion TargetVersion { get; set; }
+
+        /// <summary>
+        /// API key for OpenAI GPT models used in script level 4 recovery.
+        /// Stored in plain text. Keep this safe.
+        /// </summary>
+        public string? OpenAIApiKey { get; set; }
+
+        /// <summary>
+        /// API key for Anthropic Claude models used in script level 4 recovery.
+        /// Stored in plain text. Keep this safe.
+        /// </summary>
+        public string? AnthropicApiKey { get; set; }
 
 	public void Log()
 	{
 		Logger.Info(LogCategory.General, $"{nameof(ScriptContentLevel)}: {ScriptContentLevel}");
 		Logger.Info(LogCategory.General, $"{nameof(StreamingAssetsMode)}: {StreamingAssetsMode}");
-		Logger.Info(LogCategory.General, $"{nameof(DefaultVersion)}: {DefaultVersion}");
-		Logger.Info(LogCategory.General, $"{nameof(TargetVersion)}: {TargetVersion}");
-	}
+                Logger.Info(LogCategory.General, $"{nameof(DefaultVersion)}: {DefaultVersion}");
+                Logger.Info(LogCategory.General, $"{nameof(TargetVersion)}: {TargetVersion}");
+                Logger.Info(LogCategory.General, $"OpenAI Key Provided: {!string.IsNullOrEmpty(OpenAIApiKey)}");
+                Logger.Info(LogCategory.General, $"Anthropic Key Provided: {!string.IsNullOrEmpty(AnthropicApiKey)}");
+        }
 }
