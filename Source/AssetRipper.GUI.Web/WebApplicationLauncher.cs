@@ -41,7 +41,7 @@ public static class WebApplicationLauncher
 
 	public static void Launch(string[] args)
 	{
-		RootCommand rootCommand = new() { Description = "AssetRipper" };
+                RootCommand rootCommand = new() { Description = "Xera Ripper" };
 
 		Option<int> portOption = new Option<int>(
 			name: "--port",
@@ -122,7 +122,7 @@ public static class WebApplicationLauncher
 		{
 			Logger.Add(string.IsNullOrEmpty(logPath) ? new FileLogger() : new FileLogger(logPath));
 		}
-		Logger.LogSystemInformation("AssetRipper");
+                Logger.LogSystemInformation("Xera Ripper");
 		Logger.Add(new ConsoleLogger());
 
 		Localization.LoadLanguage(GameFileLoader.Settings.LanguageCode);
@@ -171,12 +171,12 @@ public static class WebApplicationLauncher
 				string address = app.Services.GetRequiredService<IServer>().Features.Get<IServerAddressesFeature>()?.Addresses.FirstOrDefault()
 					?? throw new InvalidOperationException("Failed to get server address.");
 
-				WebApplicationLauncher.PhotinoWindow = new PhotinoWindow
-				{
-					LogVerbosity = 0,
-					Title = "AssetRipper",
-					Centered = true,
-				};
+                                WebApplicationLauncher.PhotinoWindow = new PhotinoWindow
+                                {
+                                        LogVerbosity = 0,
+                                        Title = "Xera Ripper",
+                                        Centered = true,
+                                };
 
 				PhotinoWindow.Load(address);
 			}));
@@ -186,7 +186,7 @@ public static class WebApplicationLauncher
 		app.UseSwaggerUI(Theme.Gruvbox, null, c =>
 		{
 			// Point to the static OpenAPI file
-			c.SwaggerEndpoint(DocumentationPaths.OpenApi, "AssetRipper API");
+                        c.SwaggerEndpoint(DocumentationPaths.OpenApi, "Xera Ripper API");
 		});
 
 		//Static files

@@ -28,7 +28,8 @@ public static class GameFileLoader
 			field = value;
 		}
 	} = new(Settings);
-	public static bool Premium => ExportHandler.GetType() != typeof(ExportHandler);
+        // Premium edition enabled by default
+        public static bool Premium => true;
 
 	public static void Reset()
 	{
