@@ -6,6 +6,7 @@ using AssetRipper.Import.Logging;
 using AssetRipper.Import.Structure.Assembly.Managers;
 using AssetRipper.IO.Files;
 using AssetRipper.Processing;
+using System.IO;
 
 namespace AssetRipper.GUI.Web;
 
@@ -57,8 +58,8 @@ public static class GameFileLoader
 			{
 				Directory.Delete(path, true);
 			}
-			
 			Directory.CreateDirectory(path);
+			File.Create(Path.Combine(path, "Xera.txt")).Dispose();
 			ExportHandler.Export(GameData, path);
 		}
 	}
@@ -72,7 +73,8 @@ public static class GameFileLoader
 				Directory.Delete(path, true);
 			}
 			
-			Directory.CreateDirectory(path);
+Directory.CreateDirectory(path);
+			File.Create(Path.Combine(path, "Xera.txt")).Dispose();
 			Logger.Info(LogCategory.Export, "Starting primary content export");
 			Logger.Info(LogCategory.Export, $"Attempting to export assets to {path}...");
 			Settings.ExportRootPath = path;
