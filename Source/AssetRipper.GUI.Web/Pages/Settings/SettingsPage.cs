@@ -103,15 +103,23 @@ public sealed partial class SettingsPage : DefaultPage
 								}
 							}
 
-							using (new Div(writer).WithClass("row").End())
-							{
-								using (new Div(writer).WithClass("col").End())
-								{
-									WriteTextAreaForTargetVersion(writer);
-								}
-							}
-						}
-					}
+                                                        using (new Div(writer).WithClass("row").End())
+                                                        {
+                                                                using (new Div(writer).WithClass("col").End())
+                                                                {
+                                                                        WriteTextAreaForTargetVersion(writer);
+                                                                }
+                                                                using (new Div(writer).WithClass("col").End())
+                                                                {
+                                                                        WriteTextAreaForOpenAIApiKey(writer);
+                                                                }
+                                                                using (new Div(writer).WithClass("col").End())
+                                                                {
+                                                                        WriteTextAreaForAnthropicApiKey(writer);
+                                                                }
+                                                        }
+                                                }
+                                        }
 
 					using (new Div(writer).WithClass("border rounded p-3 m-2").End())
 					{
@@ -204,17 +212,41 @@ public sealed partial class SettingsPage : DefaultPage
 			.Close();
 	}
 
-	private static void WriteTextAreaForTargetVersion(TextWriter writer)
-	{
-		new Label(writer).WithClass("form-label").WithFor(nameof(Configuration.ImportSettings.TargetVersion)).Close(Localization.TargetVersionForVersionChanging);
-		new Input(writer)
-			.WithType("text")
-			.WithClass("form-control")
-			.WithId(nameof(Configuration.ImportSettings.TargetVersion))
-			.WithName(nameof(Configuration.ImportSettings.TargetVersion))
-			.WithValue(Configuration.ImportSettings.TargetVersion.ToString())
-			.Close();
-	}
+        private static void WriteTextAreaForTargetVersion(TextWriter writer)
+        {
+                new Label(writer).WithClass("form-label").WithFor(nameof(Configuration.ImportSettings.TargetVersion)).Close(Localization.TargetVersionForVersionChanging);
+                new Input(writer)
+                        .WithType("text")
+                        .WithClass("form-control")
+                        .WithId(nameof(Configuration.ImportSettings.TargetVersion))
+                        .WithName(nameof(Configuration.ImportSettings.TargetVersion))
+                        .WithValue(Configuration.ImportSettings.TargetVersion.ToString())
+                        .Close();
+        }
+
+        private static void WriteTextAreaForOpenAIApiKey(TextWriter writer)
+        {
+                new Label(writer).WithClass("form-label").WithFor(nameof(Configuration.ImportSettings.OpenAIApiKey)).Close("OpenAI API Key");
+                new Input(writer)
+                        .WithType("text")
+                        .WithClass("form-control")
+                        .WithId(nameof(Configuration.ImportSettings.OpenAIApiKey))
+                        .WithName(nameof(Configuration.ImportSettings.OpenAIApiKey))
+                        .WithValue(Configuration.ImportSettings.OpenAIApiKey ?? string.Empty)
+                        .Close();
+        }
+
+        private static void WriteTextAreaForAnthropicApiKey(TextWriter writer)
+        {
+                new Label(writer).WithClass("form-label").WithFor(nameof(Configuration.ImportSettings.AnthropicApiKey)).Close("Anthropic API Key");
+                new Input(writer)
+                        .WithType("text")
+                        .WithClass("form-control")
+                        .WithId(nameof(Configuration.ImportSettings.AnthropicApiKey))
+                        .WithName(nameof(Configuration.ImportSettings.AnthropicApiKey))
+                        .WithValue(Configuration.ImportSettings.AnthropicApiKey ?? string.Empty)
+                        .Close();
+        }
 
 	private static void WriteCheckBox(TextWriter writer, string label, bool @checked, string id, bool disabled = false)
 	{
